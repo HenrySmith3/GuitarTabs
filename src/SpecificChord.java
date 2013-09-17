@@ -8,12 +8,12 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class SpecificChord {
-    public ArrayList<Note> notes = new ArrayList<Note>(6);
+    public ArrayList<Note> notes = new ArrayList<Note>(7);
     public String name;
 
     public SpecificChord(String name, int fretForFirstString) {
         this.name = name;
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 6; i++) {
             notes.add(i, new Note(i, Note.NOTPLAYED));//initalize with open
         }
         notes.get(0).fretNumber = fretForFirstString;
@@ -21,7 +21,7 @@ public class SpecificChord {
     }
     public SpecificChord(SpecificChord specificChord) {
         this.name = specificChord.name;
-        this.notes = new ArrayList<Note>(6);
+        this.notes = new ArrayList<Note>(7);
         for (Note note : specificChord.notes) {
             this.notes.add(note.stringNumber, new Note(note));
         }
@@ -55,7 +55,7 @@ public class SpecificChord {
 
     public String toString() {
         String retVal = "Chord:"+name+"\n";
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 6; i++) {
             Note note = ChordFinder.getBaseNoteForStringNumber(i);
             retVal += note.noteName;
             retVal += "---";

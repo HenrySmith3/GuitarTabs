@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -14,20 +15,19 @@ public class ChordFinder {
         this.chords = chords;
     }
 
-    public String getAllChordPermutations() {
-        String retVal = "";
+    public void getAllChordPermutations(PrintWriter pw) {
+        StringBuilder retVal = new StringBuilder();
         for (Chord chord : chords) {
-            retVal += getAllPossibilities(chord);
+            getAllPossibilities(chord, pw);
         }
-        return retVal;
     }
 
     //Takes a chord and returns a string of all possibilities of that chord.
-    public String getAllPossibilities(Chord chord) {
+    public String getAllPossibilities(Chord chord, PrintWriter pw) {
         ArrayList<SpecificChord> possibilities = new ArrayList<SpecificChord>();
         Note baseNote = getBaseNoteForStringNumber(0);
         int fret = 0;
-        while (fret <= 24) {   //SHould this be 25?
+        while (fret <= 26) {   //SHould this be 25?
             if (chord.notes.contains(baseNote.noteName)) {
                 possibilities.add(new SpecificChord(chord.name, fret));
             }
@@ -35,11 +35,11 @@ public class ChordFinder {
             baseNote = baseNote.nextUp();
         }
         //So now we have possibilities with the first strings set.
-        for (int stringNumber = 1; stringNumber <=5; stringNumber++) {  //second string to last string.
+        for (int stringNumber = 1; stringNumber <=6; stringNumber++) {  //second string to last string.
             ArrayList<SpecificChord> newPossibilities = new ArrayList<SpecificChord>();
             fret = 0;
             Note note = getBaseNoteForStringNumber(stringNumber);
-            while (fret <= 24) {
+            while (fret <= 26) {
                 if (chord.notes.contains(note.noteName)) {//if we even want this note;
                     for (SpecificChord specificChord : possibilities) {
                         if (specificChord.canTake(note)) {
@@ -57,7 +57,7 @@ public class ChordFinder {
         String retVal = "";
         for (SpecificChord specificChord : possibilities) {
             if (specificChord.hasAllNotesFor(chord)) {
-                retVal += specificChord.toString();
+                pw.write(specificChord.toString());
             }
         }
         return retVal;
@@ -65,17 +65,19 @@ public class ChordFinder {
     public static Note getBaseNoteForStringNumber(int stringNumber) {
         switch (stringNumber) {
             case 0:
-                return new Note("E", 0, 0);
+                return new Note("B", 0, 0);
             case 1:
-                return new Note("A", 1, 0);
+                return new Note("E", 1, 0);
             case 2:
-                return new Note("D", 2, 0);
+                return new Note("A", 2, 0);
             case 3:
-                return new Note("G", 3, 0);
+                return new Note("D", 3, 0);
             case 4:
-                return new Note("B", 4, 0);
+                return new Note("G", 4, 0);
             case 5:
-                return new Note("E", 5, 0);
+                return new Note("B", 5, 0);
+            case 6:
+                return new Note("E", 6, 0);
         }
         throw new RuntimeException();  //Invalid name.
     }

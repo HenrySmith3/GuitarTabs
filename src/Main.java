@@ -28,9 +28,9 @@ public class Main {
 
         ChordFinder chordFinder = new ChordFinder(chords);
 
-        PrintWriter pw = new PrintWriter("Smith_Henry.txt");
+        PrintWriter pw = new PrintWriter("Smith_Henry_3.txt");
 
-        pw.write(chordFinder.getAllChordPermutations());
+        chordFinder.getAllChordPermutations(pw);
 
     }
 }
